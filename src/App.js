@@ -1,26 +1,106 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Route, Switch
+} from 'react-router-dom';
+import NavBar from './components/NavBar';
+import Items from './containers/Items';
+import Profile from './components/Profile';
+import ItemForm from './components/ItemForm';
+import Home from './components/Home'
+import {connect} from 'react-redux';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import { login } from './actions/items'
+import  UserSearch from './containers/UserSearch'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  componentDidMount(){
+    this.props.fetchItems();
+    const token = localStorage.getItem('token')
+    if (!!token){
+      this.props.fetchLogin(token);
+    }
+  }
+
+  signOut = () => {
+    localStorage.removeItem('token')
+    this.props.signOut()
+  }
+  
+  render(){
+    return (
+    <Router >
+      <React.Fragment>
+      <NavBar currentUser={this.props.currentUser}/>
+     { this.props.currentUser ? <button onClick={this.signOut} >Sign Out</button> : null}
+      <Switch >
+        <Route exact path="/items" render={(rp) => <Items {...rp} currentUser={this.props.currentUser} items={this.props.items} type="items"/>} />
+        {this.props.currentUser ? 
+        <Route exact path={`/profile/${this.props.currentUser.username}`} render={(rp) => <Profile {...rp} currentUser={this.props.currentUser}/>} /> : null} 
+        <Route exact path="/profile/:username" render={(rp) => <Profile {...rp} loggedIn={!!this.props.currentUser}/>} />
+        <Route exact path="/custom-items" render={(rp) => <Items {...rp} currentUser={this.props.currentUser} items={this.props.customItems} type="items"/>} />
+        <Route exact path="/create-custom-item" component={ItemForm} />
+        <Route exact path="/login" render={(rp) => <Login {...rp} loggedIn={!!this.props.currentUser}/>} />
+        <Route exact path="/sign-up" render={(rp) => <SignUp {...rp} loggedIn={!!this.props.currentUser}/> } />
+        <Route exact path="/users/with/:itemname" render={(rp) => <UserSearch {...rp} currentUser={this.props.currentUser}/> } />
+        <Route exact path="/users/named/:username" render={(rp) => <UserSearch {...rp} currentUser={this.props.currentUser}/> } />
+        <Route path='/' component={Home} />
+      </Switch>
+      </ React.Fragment>
+    </Router>
+  )}
+};
+
+function fetchItems(){
+  return (dispatch) => {
+    fetch('http://localhost:3000/items')
+      .then(response => response.json())
+      .then(data =>  {
+        console.log(data.customItems)
+        dispatch({ type: 'FETCH_ITEMS', items: data.items, customItems: data.customItems })});
+  };
 }
 
-export default App;
+function fetchLogin(token){
+  return ((dispatch) => {
+
+    const reqObj = {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+
+    fetch('http://localhost:3000/login', reqObj)
+      .then(response => response.json())
+      .then(data =>  {
+        if (data.error) {
+          alert(data.error)
+        } else {
+          dispatch(login(data.user))
+          
+        }
+       
+    });
+  })
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    fetchItems: () => {
+      dispatch(fetchItems())
+    },
+    fetchLogin: (token) => {
+      dispatch(fetchLogin(token))
+    },
+    signOut: () => {
+      dispatch({ type: 'SIGN_OUT'})
+    }
+
+    
+  }
+}
+
+
+export default connect((state) => ({currentUser: state.currentUser, items: state.items, customItems: state.customItems}), mapDispatchToProps)(App)
