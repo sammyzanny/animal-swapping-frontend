@@ -5,7 +5,7 @@ class UserSearch extends Component {
   state = {
     page: 1,
     users: [],
-    storedUsers: [] 
+    storedUsers: []
   }
   
   componentDidMount(){
@@ -72,7 +72,7 @@ class UserSearch extends Component {
     const start = (page-1)*20, finish = page*20; 
     console.log(page)
     return users.slice(start, finish).map((user) => {
-     return <UserCard user={user} />
+     return <UserCard user={user} history={this.props.history} />
     })
   }
 

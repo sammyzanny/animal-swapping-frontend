@@ -45,7 +45,7 @@ class App extends React.Component {
         <Route exact path="/sign-up" render={(rp) => <SignUp {...rp} loggedIn={!!this.props.currentUser}/> } />
         <Route exact path="/users/with/:itemname" render={(rp) => <UserSearch {...rp} currentUser={this.props.currentUser}/> } />
         <Route exact path="/users/named/:username" render={(rp) => <UserSearch {...rp} currentUser={this.props.currentUser}/> } />
-        <Route path='/' component={Home} />
+        <Route path='/' render={(rp) => <Home {...rp}/>} />
       </Switch>
       </ React.Fragment>
     </Router>
@@ -57,7 +57,6 @@ function fetchItems(){
     fetch('http://localhost:3000/items')
       .then(response => response.json())
       .then(data =>  {
-        console.log(data.customItems)
         dispatch({ type: 'FETCH_ITEMS', items: data.items, customItems: data.customItems })});
   };
 }
@@ -78,6 +77,7 @@ function fetchLogin(token){
         if (data.error) {
           alert(data.error)
         } else {
+          console.log(data.user)
           dispatch(login(data.user))
           
         }

@@ -28,8 +28,8 @@ class Login extends Component {
     fetch('http://localhost:3000/auth', reqObj)
         .then(response => response.json())
         .then(data =>  {
-            if (data.error) {
-                alert(data.error)
+            if (data.message) {
+                alert(data.message)
               } else {
                   localStorage.setItem("token", data.jwt)
                   console.log(data)

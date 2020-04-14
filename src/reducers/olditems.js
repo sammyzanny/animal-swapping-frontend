@@ -1,5 +1,3 @@
-
-
 export default (state = {items: [], customItems: [], currentUser: null}, action) => {
     
 
@@ -9,28 +7,37 @@ export default (state = {items: [], customItems: [], currentUser: null}, action)
         return {
           ...state,
           items: action.items,
-          customItems: action.customItems,  
+          customItems: action.customItems,
+          currentUser: state.currentUser
+  
         };
 
         case 'LOG_IN':
             return {
                 ...state,
+                items: [...state.items],
+                customItems: [...state.customItems],
                 currentUser: action.user
             };
 
         case 'SIGN_OUT':
           return {
             ...state,
+            items: [...state.items],
+            customItems: [...state.customItems],
             currentUser: null
           }
         
   
       case 'CREATE_ITEM':
         return {...state,
+        items: [...state.items],
         customItems: [...state.customItems, action.item],
         currentUser: {
           ...state.currentUser,
+          inventory: [...state.currentUser.inventory],
           customs: [...state.currentUser.customs, action.item],
+          wishlist: [...state.currentUser.wishlist]
         }
     };
   
@@ -57,8 +64,12 @@ export default (state = {items: [], customItems: [], currentUser: null}, action)
 
         return {
           ...state,
+          items: [...state.items],
+          customItems: [...state.customItems],
           currentUser: {...state.currentUser, 
+            inventory: [...state.currentUser.inventory],
             wishlist: [...state.currentUser.wishlist, action.item],
+            customs: [...state.currentUser.customs]
           }
       };
 
@@ -66,9 +77,14 @@ export default (state = {items: [], customItems: [], currentUser: null}, action)
         const newWishlist = [...state.currentUser.wishlist.filter(wish => wish.wishId !== action.wishId)];
         return {
               ...state,
+              items: [...state.items],
+              customItems: [...state.customItems],
               currentUser: {
                 ...state.currentUser,
-                wishlist: newWishlist
+                inventory: [...state.currentUser.inventory],
+                wishlist: newWishlist,
+                customs: [...state.currentUser.customs]
+
               }
             };
   
@@ -76,8 +92,12 @@ export default (state = {items: [], customItems: [], currentUser: null}, action)
         
         return {
             ...state,
+            items: [...state.items],
+            customItems: [...state.customItems],
             currentUser: {...state.currentUser, 
-              inventory: [...state.currentUser.inventory, action.item]
+              inventory: [...state.currentUser.inventory, action.item],
+              wishlist: [...state.currentUser.wishlist],
+              customs: [...state.currentUser.customs]
             }
         };
   
@@ -85,18 +105,30 @@ export default (state = {items: [], customItems: [], currentUser: null}, action)
         const newInventory = [...state.currentUser.inventory.filter(sale => sale.saleId !== action.saleId)];
         return {
               ...state,
+              items: [...state.items],
+              customItems: [...state.customItems],
               currentUser: {
                 ...state.currentUser,
                 inventory: newInventory,
+                wishlist: [...state.currentUser.wishlist],
+                customs: [...state.currentUser.customs]
+
               }
             };
-
       case 'REQUEST_TRADE':
         return {
           ...state,
+          items: [...state.items],
+          customItems: [...state.customItems],
           currentUser: {
             ...state.currentUser,
+            inventory: [...state.currentUser.inventory],
+            wishlist: [...state.currentUser.wishlist],
+            customs: [...state.currentUser.customs],
+            exchanges: [...state.currentUser.exchanges],
+            purchases: [...state.currentUser.purchases],
             pending_purchases: [...state.currentUser.pending_purchases, action.request],
+            pending_exchanges: [...state.currentUser.pending_exchanges]
           }
         }
 
@@ -104,9 +136,16 @@ export default (state = {items: [], customItems: [], currentUser: null}, action)
             const newPendingExchanges = state.currentUser.pending_exchanges.filter(pe => pe.id !== action.exchange.id)
             return {
               ...state,
+              items: [...state.items],
+              customItems: [...state.customItems],
               currentUser: {
                 ...state.currentUser,
+                inventory: [...state.inventory],
+                wishlist: [...state.currentUser.wishlist],
+                customs: [...state.currentUser.customs],
                 exchanges: [...state.currentUser.exchanges, action.exchange],
+                purchases: [...state.currentUser.purchases],
+                pending_purchases: [...state.currentUser.pending_purchases],
                 pending_exchanges: newPendingExchanges
               }
             }
@@ -116,8 +155,16 @@ export default (state = {items: [], customItems: [], currentUser: null}, action)
         const filteredPendingExchanges = state.currentUser.pending_exchanges.filter(pe => pe.id !== action.exchangeId)
         return {
           ...state,
+          items: [...state.items],
+          customItems: [...state.customItems],
           currentUser: {
             ...state.currentUser,
+            inventory: [...state.inventory],
+            wishlist: [...state.currentUser.wishlist],
+            customs: [...state.currentUser.customs],
+            exchanges: [...state.currentUser.exchanges],
+            purchases: [...state.currentUser.purchases],
+            pending_purchases: [...state.currentUser.pending_purchases],
             pending_exchanges: filteredPendingExchanges
           }
         }

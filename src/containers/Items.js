@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ItemCard from '../components/ItemCard';
-import { deleteItem, addInventory, removeInventory, requestPurchase, addWishlist, removeWishlist} from '../actions/items';
+import { deleteItem, addInventory, removeInventory, requestTrade, addWishlist, removeWishlist} from '../actions/items';
 
 class Items extends Component {
   state = {
@@ -39,7 +39,7 @@ class Items extends Component {
 
 
   cards = () => {
-    const { items,  addInventory, history, removeInventory, deleteItem, addWishlist, removeWishlist, type, requestPurchase} = this.props;
+    const { items,  addInventory, history, removeInventory, deleteItem, addWishlist, removeWishlist, type, requestTrade, ownerId} = this.props;
     const start = (this.state.page-1)*21, finish = this.state.page*21; 
     let prevCat, possiblyFilteredItems;
     if(this.state.searchTerm){
@@ -56,18 +56,18 @@ class Items extends Component {
             <h4>
               {cates[1]}
             </h4>
-            <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestPurchase={requestPurchase} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} />
+            <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestTrade={requestTrade} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} ownerId={ownerId} />
           </React.Fragment>
         }
         prevCat = item.category        
         return <React.Fragment>
             {cates[1] ? <React.Fragment><h2>{cates[0]}</h2><br/><h4>{cates[1]}</h4></React.Fragment> : <h3>{cates[0]}</h3>}
             <br/><br/><br/>
-            <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestPurchase={requestPurchase} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} />
+            <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestTrade={requestTrade} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} ownerId={ownerId} />
         </React.Fragment>
       } 
       prevCat = item.category
-      return <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestPurchase={requestPurchase} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} />
+      return <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestTrade={requestTrade} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} ownerId={ownerId} />
     })
   }
 
@@ -89,7 +89,7 @@ class Items extends Component {
         <div className="container">
           <div className="row">
               {this.cards()}
-          </div>
+            </div>
         </div>
         <div className="page-buttons">
           <button onClick={this.pageBackward} >Back</button><button onClick={this.pageForward}>Next</button>
@@ -103,4 +103,4 @@ class Items extends Component {
 
 
 
-export default connect(null, { deleteItem, addInventory, removeInventory, requestPurchase, addWishlist, removeWishlist })(Items);
+export default connect(null, { deleteItem, addInventory, removeInventory, requestTrade, addWishlist, removeWishlist })(Items);

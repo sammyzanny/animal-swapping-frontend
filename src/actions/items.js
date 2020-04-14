@@ -47,9 +47,26 @@ export const login = user => {
     }
 }
 
-export const requestPurchase = itemId => {
+export const requestTrade = request => {
   return {
-    type: 'REQUEST_PURCHASE',
-    itemId
+    type: 'REQUEST_TRADE',
+    request
   }
 }
+
+export const acceptTrade = exchange => {
+  return {
+    type: 'ACCEPT_TRADE',
+    exchange
+  }
+}
+
+export const declineTrade = exchangeId => {
+  return {
+    type: 'DECLINE_TRADE',
+    exchangeId
+  }
+
+}
+
+

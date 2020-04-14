@@ -1,9 +1,11 @@
 import React from 'react';
 import Items from '../containers/Items'
+import Requests from '../containers/Requests'
 
 
 class Profile extends React.Component {
     state = {
+        id: '',
         username: '',
         bio: '',
         inventory: '',
@@ -42,6 +44,27 @@ class Profile extends React.Component {
         })
     }
 
+    viewPending = () => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                inventory: prevState.inventory,
+                showWhat: 'pending'
+            }
+        })
+    }
+
+    viewAccepted = () => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                inventory: prevState.inventory,
+                showWhat: 'accepted'
+            }
+        })
+    }
+
+
     componentDidMount(){
         if (!this.props.currentUser){
             fetch(`http://localhost:3000/user/${this.props.match.params.username}`)
@@ -50,25 +73,29 @@ class Profile extends React.Component {
             if (data.error) {
              alert(data.error)
             } else {
-              console.log(data)
-              this.setState({...data.user, showInventory: this.state.showInventory})
-              
+              this.setState({...data.user, showWhat: '', searchTerm: ''})
             }
-            
         });
         }
     }
 
     chooseMyItems = () => {
+        const {currentUser, history} = this.props
         switch (this.state.showWhat){
             case 'inventory':
-                return <Items items={this.props.currentUser.inventory} type='myInventory' />
+                return <Items items={currentUser.inventory} type='myInventory' />
 
             case 'wishlist':
-                return <Items items={this.props.currentUser.wishlist} type='myWishlist' />
+                return <Items items={currentUser.wishlist} type='myWishlist' />
 
             case 'customs': 
-                return <Items items={this.props.currentUser.customs} type="myCustoms"/>
+                return <Items items={currentUser.customs} type="myCustoms"/>
+
+            case 'pending':
+                return <Requests exchanges={currentUser.pending_exchanges} type="pending" exchangeHeader="Incoming Requests" purchases={currentUser.pending_purchases} purchaseHeader="You are Requesting" history={history}/>
+
+            case 'accepted':
+                return <Requests exchanges={currentUser.exchanges} type="accepted" purchases={currentUser.purchases} exchangeHeader="Past Trades"  purchaseHeader="Past Purchases"  history={history} />
             
             default:
                 return null
@@ -78,7 +105,7 @@ class Profile extends React.Component {
     chooseOthersItems = () => {
         switch (this.state.showWhat){
             case 'inventory':
-                return <Items items={this.state.inventory} type="othersInventory"/>
+                return <Items items={this.state.inventory} type="othersInventory" ownerId={this.state.id}/>
 
             case 'wishlist':
                 return <Items items={this.state.wishlist} type="othersWishlist"/>
@@ -90,12 +117,17 @@ class Profile extends React.Component {
                 return null
         }
     }
+
     renderCurrentUser = () => {
         return (
             <React.Fragment >
             <h1>Hello {this.props.currentUser.username}</h1>
-            <h3>Your Bio</h3><p>{this.props.currentUser.bio}</p>
-            <button onClick={this.viewInventory}>My Inventory</button><button onClick={this.viewWishlist}>My Wishlist</button><button onClick={this.viewCustoms}>My Custom Items</button>
+            <h3>Your Bio:</h3><p>{this.props.currentUser.bio}</p>
+            <button onClick={this.viewInventory}>My Inventory</button>
+            <button onClick={this.viewWishlist}>My Wishlist</button>
+            <button onClick={this.viewCustoms}>My Custom Items</button>
+            <button onClick={this.viewPending}>Pending Requests</button>
+            <button onClick={this.viewAccepted}>Accepted Requests</button>
             {this.chooseMyItems()}
             </React.Fragment>
         )
@@ -126,6 +158,7 @@ class Profile extends React.Component {
         event.preventDefault();
         this.props.history.push(`/users/named/${this.state.searchTerm}`)
     }
+
     render(){
         return (
             <div >

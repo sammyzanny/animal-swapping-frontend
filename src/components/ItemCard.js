@@ -110,9 +110,34 @@ class ItemCard extends React.Component {
       })
   }
 
+  requestTrade = () => {
+    console.log(this.props)
+    const { item, ownerId } = this.props
+    const token = localStorage.getItem("token")
+
+    const reqObj = {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          itemId: item.id,
+          sellerId: ownerId
+      })
+    }
+    
+    fetch(`http://localhost:3000/requests`, reqObj)
+      .then(response => response.json())
+      .then(request =>  {
+        console.log(request)
+        this.props.requestTrade(request)
+      });
+  }
+
   
   renderButtons = () => {
-    const { item, type, requestPurchase} = this.props
+    const { type } = this.props
     switch(type){
       case "myInventory":
         return (
@@ -156,7 +181,7 @@ class ItemCard extends React.Component {
           <div className="btn-group btn-group-sm" role="group" aria-label="Basic example">
             <button 
               type="button" 
-              onClick={() => requestPurchase(item.id)} 
+              onClick={this.requestTrade} 
               className="btn btn-primary"
             >
               Request Purchase
