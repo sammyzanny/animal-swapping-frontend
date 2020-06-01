@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ItemCard from '../components/ItemCard';
 import { deleteItem, addInventory, removeInventory, requestTrade, addWishlist, removeWishlist} from '../actions/items';
 import { Input } from '@material-ui/core';
-import photo from '../button.png'
+
 class Items extends Component {
   state = {
     page: 1,
@@ -51,6 +51,25 @@ class Items extends Component {
     console.log("pfi",possiblyFilteredItems)
     console.log(items)
     return possiblyFilteredItems.slice(start, finish).map((item) => {
+      if(prevCat !== item.category){
+        const cates = item.category.split(" ")
+        if(prevCat && (prevCat.split(" ")[0] === cates[0])){
+          prevCat = item.category        
+          return <React.Fragment>
+            <h4>
+              {cates[1]}
+            </h4>
+            <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestTrade={requestTrade} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} ownerId={ownerId} />
+          </React.Fragment>
+        }
+        prevCat = item.category        
+        return <React.Fragment>
+            {cates[1] ? <React.Fragment><h2>{cates[0]}</h2><h4>{cates[1]}</h4></React.Fragment> : <h2>{cates[0]}</h2>}
+            <br/><br/><br/>
+            <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestTrade={requestTrade} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} ownerId={ownerId} />
+        </React.Fragment>
+      } 
+      prevCat = item.category
       return <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestTrade={requestTrade} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} ownerId={ownerId} />
     })
   }
@@ -62,25 +81,22 @@ class Items extends Component {
       
 
   render() {
-    const btnUrl = "https://lh3.googleusercontent.com/proxy/mD1shnFM71XcxrBM7yCpJR7tn_gFj-bq1xYTGxUPKf8_H-fMDb2V9kDqjTKIsCDTbzbt4zK1IM64kiiR4wK9Xyvc2sk82qgB9UkKw1jefp6gTGV3bGiHkIupDoqMR1pOPaJkOVJUxElJB_HhMl3la1e5b-DkwIBHmALXKDvXe_1pe3kQ4wud"
 
     return (
       <div>
         <hr />
-        <div className="itemsearch">
-          <Input type="text" disableUnderline={true} value={this.state.searchTerm} onChange={this.handleSearch} style={{ backgroundColor: "white", borderRadius: "55px", marginLeft: "10px", marginRight: "auto", paddingLeft: "10px", width: "auto"}} placeholder="Filter Items By Name" />
+        <div className="input-field col s4 offset-s4">
+          <Input type="text" value={this.state.searchTerm} onChange={this.handleSearch} style={{ backgroundColor: "grey", borderRadius: "55px", marginLeft: "10px", marginRight: "auto", paddingLeft: "10px"}} placeholder="Filter Items By Name" />
         </div>
         <hr />
         <div className="container">
           <div className="row">
               {this.cards()}
-          </div>
+            </div>
         </div>
-        <hr />
         <div className="page-buttons">
-           <input type="image" src={photo} onClick={this.pageBackward} style={{transform: "scaleX(-1)", marginRight: "50px"}}/><input type="image" src={photo} onClick={this.pageForward} />
+          <button onClick={this.pageBackward} >Back</button><button onClick={this.pageForward}>Next</button>
         </div>
-        <hr />
       </div>
     );
   }

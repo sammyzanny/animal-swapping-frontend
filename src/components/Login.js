@@ -72,8 +72,8 @@ class Login extends Component {
                     <label htmlFor="tags" className="col-md-4 control-label">Password:</label>
                     <div className="col-md-5">
                       <input
+                        type="password"
                         className="form-control"
-                        type="text"
                         name="password"
                         value={this.state.password}
                         onChange={this.handleOnChange}

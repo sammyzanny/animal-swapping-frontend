@@ -7,7 +7,7 @@ class ItemForm extends Component {
 
   state = {
     name: '',
-    category: ''
+    category: 'Bugs'
   }
 
   handleOnChange = event => {

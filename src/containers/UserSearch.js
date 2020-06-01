@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import UserCard from '../components/UserCard';
+import photo from '../button.png'
 
 class UserSearch extends Component {
   state = {
@@ -123,7 +124,7 @@ class UserSearch extends Component {
         <div className="row justify-content-center">
           <h2>Users</h2>
         </div>
-        {this.props.currentUser ? <input type="checkbox" onChange={this.handleFilter} /> : null }
+        {this.props.currentUser ? <div><label style={{backgroundColor: "grey", color: "white", margin: "10px", borderRadius: "25px", padding: "10px"}}>Mutual Trade</label><input type="checkbox" onChange={this.handleFilter} /></div> : null }
         <hr />
         <div className="container">
           <div className="row">
@@ -132,7 +133,7 @@ class UserSearch extends Component {
           </div>
         </div>
         <div className="page-buttons">
-          <button onClick={this.pageBackward} >Back</button><button onClick={this.pageForward}>Next</button>
+           <input type="image" src={photo} onClick={this.purchaseBackward} style={{transform: "scaleX(-1)", marginRight: "50px"}}/><input type="image" src={photo} onClick={this.purchaseForward} />
         </div>
       </div>
     );

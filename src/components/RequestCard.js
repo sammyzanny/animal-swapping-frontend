@@ -14,7 +14,9 @@ class RequestCard extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-          status: response
+          status: response,
+          otherUserId: request.otherUser.id,
+          itemId: request.item.id
       })
     
     }
@@ -26,8 +28,8 @@ class RequestCard extends React.Component {
                 alert(data.error)
             } else if (response === "accepted"){
               this.props.acceptTrade(request)
-            } else if ( response === "denied"){
-                this.props.declineTrade(request)
+            } else if ( response === "declined"){
+                this.props.declineTrade(request.id)
             }
       });
   }
@@ -39,13 +41,13 @@ class RequestCard extends React.Component {
     const { request, type, history } = this.props
     const status = type.split("-")[0]
     return (
-    <div >
-      <div className="card card-inverse card-success card-primary mb-3 text-center">
+    <div style={{marginLeft: "10px" , marginRight: "10px"}}>
+      <div className="card card-inverse card-success card-primary mb-3 text-center" style={{backgroundColor: 'grey', width: '332px'}}>
         <div className="card-block">
           <blockquote className="card-blockItem">
             <h3>{request.item.name}</h3>
             <img src={request.item.img} alt="https://steamuserimages-a.akamaihd.net/ugc/901148415702899948/766B8EF2FEF58C28F33B79D61AB9F1F39F63C95D/" />
-            <h2 onClick={() => {history.push(`/profile/${request.otherUser.username}`)}}>{request.otherUser.username}</h2>
+            <h2 onClick={() => {history.push(`/users/named/${request.otherUser.username}`)}}>{request.otherUser.username}</h2>
           </blockquote>
         </div>
         {status === "accepted" ? 

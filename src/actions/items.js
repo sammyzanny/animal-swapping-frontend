@@ -69,4 +69,12 @@ export const declineTrade = exchangeId => {
 
 }
 
+export const editProfile = user => {
+  return{
+    type: 'EDIT_PROFILE',
+    user
+  }
+  
+}
+
 

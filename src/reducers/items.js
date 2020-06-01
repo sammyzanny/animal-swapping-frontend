@@ -23,6 +23,12 @@ export default (state = {items: [], customItems: [], currentUser: null}, action)
             ...state,
             currentUser: null
           }
+
+        case 'EDIT_PROFILE':
+          return {
+            ...state,
+            currentUser: action.user
+          }
         
   
       case 'CREATE_ITEM':
@@ -113,7 +119,7 @@ export default (state = {items: [], customItems: [], currentUser: null}, action)
 
 
       case 'DECLINE_TRADE':
-        const filteredPendingExchanges = state.currentUser.pending_exchanges.filter(pe => pe.id !== action.exchangeId)
+        const filteredPendingExchanges = state.currentUser.pending_exchanges.filter(pe => pe.id != action.exchangeId)
         return {
           ...state,
           currentUser: {

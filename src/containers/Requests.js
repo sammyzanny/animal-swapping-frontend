@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RequestCard from '../components/RequestCard';
 import {acceptTrade, declineTrade} from '../actions/items'
 import {connect} from 'react-redux'
-
+import photo from '../button.png'
 class Requests extends Component {
   state = {
     exchangePage: 1,
@@ -98,8 +98,8 @@ class Requests extends Component {
             </div>
             </div>
             <div className="page-buttons">
-            <button onClick={this.exchangeBackward} >Back</button><button onClick={this.exchangeForward}>Next</button>
-            </div>
+           <input type="image" src={photo} onClick={this.exchangeBackward} style={{transform: "scaleX(-1)", marginRight: "50px"}}/><input type="image" src={photo} onClick={this.exchangeForward} />
+        </div>
         </div>
         <div>
         <hr />
@@ -113,7 +113,7 @@ class Requests extends Component {
             </div>
         </div>
         <div className="page-buttons">
-            <button onClick={this.purchaseBackward} >Back</button><button onClick={this.purchaseForward}>Next</button>
+           <input type="image" src={photo} onClick={this.purchaseBackward} style={{transform: "scaleX(-1)", marginRight: "50px"}}/><input type="image" src={photo} onClick={this.purchaseForward} />
         </div>
         </div>
      </React.Fragment>

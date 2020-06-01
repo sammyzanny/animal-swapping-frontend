@@ -60,17 +60,23 @@ if (props.currentUser){
   } else 
 return <div className="navbar">
   <NavLink
+      to="/"
+      exact
+      style={style}
+      activeStyle={activeStyle}
+    >Home </NavLink>
+  <NavLink
     to="/login"
     exact
     style={style}
     activeStyle={activeStyle}
-  >Log In </NavLink>
+  > Log In </NavLink>
   <NavLink
     to="/sign-up"
     exact
     style={style}
     activeStyle={activeStyle}
-  >Sign Up </NavLink>
+  > Sign Up </NavLink>
   </div>;
 }
 

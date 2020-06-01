@@ -225,12 +225,13 @@ class ItemCard extends React.Component {
     const { item } = this.props
 
     return (
-    <div >
-      <div className="card card-inverse card-success card-primary mb-3 text-center">
+    <div style={{marginLeft: "10px" , marginRight: "10px"}}>
+      <div className="card card-inverse card-success card-primary mb-3 text-center" style={{backgroundColor: 'grey', width: "332px"}}>
         <div className="card-block">
           <blockquote className="card-blockItem">
             <h3>{item.name}</h3>
             <img src={item.img} alt="https://steamuserimages-a.akamaihd.net/ugc/901148415702899948/766B8EF2FEF58C28F33B79D61AB9F1F39F63C95D/" />
+            <h4>{item.category}</h4>
           </blockquote>
         </div>
         <div className="float-right"> 

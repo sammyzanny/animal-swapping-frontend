@@ -11,8 +11,8 @@ const UserCard = (props) => {
     const { user} = props
 
     return (
-    <div>
-      <div className="card card-inverse card-success card-primary mb-3 text-center">
+    <div style={{marginLeft: "10px" , marginRight: "10px"}} >
+      <div className="card card-inverse card-success card-primary mb-3 text-center" style={{backgroundColor: 'grey', width: '332px'}} >
         <div className="card-block">
           <blockquote className="card-blockItem">
             <h3>{user.username}</h3>
