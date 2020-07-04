@@ -15,7 +15,6 @@ class UserSearch extends Component {
       fetch(`http://localhost:3000/users/with/${itemname}`)
       .then(resp => resp.json())
       .then(users => {
-        console.log(users)
         this.setState(prevState => {
           return {
             page: prevState.page,
@@ -28,7 +27,6 @@ class UserSearch extends Component {
       fetch(`http://localhost:3000/users/named/${username}`)
       .then(resp => resp.json())
       .then(users => {
-        console.log(users)
         this.setState(prevState => {
           return {
             page: prevState.page,
@@ -71,7 +69,6 @@ class UserSearch extends Component {
   cards = () => { 
     const { users, page } = this.state;
     const start = (page-1)*20, finish = page*20; 
-    console.log(page)
     return users.slice(start, finish).map((user) => {
      return <UserCard user={user} history={this.props.history} />
     })

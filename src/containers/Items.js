@@ -48,8 +48,6 @@ class Items extends Component {
     } else {
       possiblyFilteredItems = items
     }
-    console.log("pfi",possiblyFilteredItems)
-    console.log(items)
     return possiblyFilteredItems.slice(start, finish).map((item) => {
       return <ItemCard key={item.id}  item={item} history={history} addInventory={addInventory} requestTrade={requestTrade} removeInventory={removeInventory} deleteItem={deleteItem} type={type} addWishlist={addWishlist} removeWishlist={removeWishlist} ownerId={ownerId} />
     })
