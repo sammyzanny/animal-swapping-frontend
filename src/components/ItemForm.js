@@ -37,7 +37,6 @@ class ItemForm extends Component {
         if (data.error) {
             alert(data.error)
           } else {
-            console.log(data)
             this.props.createItem(data)
             this.setState({
               name: '',

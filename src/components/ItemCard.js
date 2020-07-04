@@ -25,7 +25,6 @@ class ItemCard extends React.Component {
     fetch(`http://localhost:3000/sales`, reqObj)
       .then(response => response.json())
       .then(sale =>  {
-        console.log(sale)
         this.props.addInventory(item)
       });
   }
@@ -48,7 +47,6 @@ class ItemCard extends React.Component {
     fetch(`http://localhost:3000/wishes`, reqObj)
       .then(response => response.json())
       .then(wish =>  {
-        console.log(wish)
         this.props.addWishlist(item)
       });
   }
@@ -111,7 +109,6 @@ class ItemCard extends React.Component {
   }
 
   requestTrade = () => {
-    console.log(this.props)
     const { item, ownerId } = this.props
     const token = localStorage.getItem("token")
 
@@ -130,7 +127,6 @@ class ItemCard extends React.Component {
     fetch(`http://localhost:3000/requests`, reqObj)
       .then(response => response.json())
       .then(request =>  {
-        console.log(request)
         this.props.requestTrade(request)
       });
   }

@@ -32,7 +32,6 @@ class Login extends Component {
                 alert(data.message)
               } else {
                   localStorage.setItem("token", data.jwt)
-                  console.log(data)
                 this.props.login(data.user)
                 this.props.history.push('/')
               }

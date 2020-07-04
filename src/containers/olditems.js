@@ -48,8 +48,7 @@ class Items extends Component {
     } else {
       possiblyFilteredItems = items
     }
-    console.log("pfi",possiblyFilteredItems)
-    console.log(items)
+  
     return possiblyFilteredItems.slice(start, finish).map((item) => {
       if(prevCat !== item.category){
         const cates = item.category.split(" ")

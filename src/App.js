@@ -79,7 +79,6 @@ function fetchLogin(token){
         if (data.error) {
           alert(data.error)
         } else {
-          console.log(data.user)
           dispatch(login(data.user))
           
         }
