@@ -21,7 +21,7 @@ class RequestCard extends React.Component {
     
     }
     
-    fetch(`https://animal-swapping.herokuapp.com/requests/${request.id}`, reqObj)
+    fetch(`https://animal-swapping-api.herokuapp.com/requests/${request.id}`, reqObj)
       .then(response => response.json())
       .then(data =>  {
             if (data.error){
