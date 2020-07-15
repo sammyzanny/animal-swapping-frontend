@@ -2,7 +2,7 @@
   "name": "animal-swapping-frontend",
   "version": "0.1.0",
   "engine": {
-    "node": "12.x"
+    "node": "13.8"
   },
   "dependencies": {
     "@material-ui/core": "^5.0.0-alpha.3",
