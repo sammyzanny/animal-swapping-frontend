@@ -38,7 +38,7 @@ class UserForm extends Component {
                 }
             })
         }
-    fetch(`http://localhost:3000/users/${this.props.currentUser.id}`, postObj)
+    fetch(`https://animal-swapping.herokuapp.com/users/${this.props.currentUser.id}`, postObj)
     .then(resp => resp.json())
     .then(data => {
         if (data.error) {

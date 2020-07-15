@@ -25,7 +25,7 @@ class Login extends Component {
             user: this.state
         })
     }
-    fetch('http://localhost:3000/auth', reqObj)
+    fetch('https://animal-swapping.herokuapp.com/auth', reqObj)
         .then(response => response.json())
         .then(data =>  {
             if (data.message) {

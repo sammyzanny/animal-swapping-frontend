@@ -31,7 +31,7 @@ class ItemForm extends Component {
                 item: item
             })
         }
-    fetch('http://localhost:3000/items', postObj)
+    fetch('https://animal-swapping.herokuapp.com/items', postObj)
     .then(resp => resp.json())
     .then(data => {
         if (data.error) {
