@@ -56,7 +56,7 @@ class App extends React.Component {
 
 function fetchItems(){
   return (dispatch) => {
-    fetch('https://animal-swapping.herokuapp.com/items')
+    fetch('https://animal-swapping-api.herokuapp.com/items')
       .then(response => response.json())
       .then(data =>  {
         dispatch({ type: 'FETCH_ITEMS', items: data.items, customItems: data.customItems })});
@@ -73,7 +73,7 @@ function fetchLogin(token){
       }
     }
 
-    fetch('https://animal-swapping.herokuapp.com/login', reqObj)
+    fetch('https://animal-swapping-api.herokuapp.com/login', reqObj)
       .then(response => response.json())
       .then(data =>  {
         if (data.error) {

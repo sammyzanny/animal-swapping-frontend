@@ -22,7 +22,7 @@ class ItemCard extends React.Component {
       })
     }
     
-    fetch(`https://animal-swapping.herokuapp.com/sales`, reqObj)
+    fetch(`https://animal-swapping-api.herokuapp.com/sales`, reqObj)
       .then(response => response.json())
       .then(sale =>  {
         this.props.addInventory(item)
@@ -44,7 +44,7 @@ class ItemCard extends React.Component {
       })
     }
     
-    fetch(`https://animal-swapping.herokuapp.com/wishes`, reqObj)
+    fetch(`https://animal-swapping-api.herokuapp.com/wishes`, reqObj)
       .then(response => response.json())
       .then(wish =>  {
         this.props.addWishlist(item)
@@ -63,7 +63,7 @@ class ItemCard extends React.Component {
 
     }
     
-    fetch(`https://animal-swapping.herokuapp.com/wishes/${wishId}`, reqObj)
+    fetch(`https://animal-swapping-api.herokuapp.com/wishes/${wishId}`, reqObj)
       .then(response => response.json())
       .then(wish =>  {
         this.props.removeWishlist(wishId)
@@ -82,7 +82,7 @@ class ItemCard extends React.Component {
 
     }
     
-    fetch(`https://animal-swapping.herokuapp.com/sales/${saleId}`, reqObj)
+    fetch(`https://animal-swapping-api.herokuapp.com/sales/${saleId}`, reqObj)
       .then(response => response.json())
       .then(items =>  {
         this.props.removeInventory(saleId)
@@ -101,7 +101,7 @@ class ItemCard extends React.Component {
 
     }
     
-    fetch(`https://animal-swapping.herokuapp.com/items/${id}`, reqObj)
+    fetch(`https://animal-swapping-api.herokuapp.com/items/${id}`, reqObj)
       .then(response => response.json())
       .then(items =>  {
         this.props.deleteItem(id)
@@ -124,7 +124,7 @@ class ItemCard extends React.Component {
       })
     }
     
-    fetch(`https://animal-swapping.herokuapp.com/requests`, reqObj)
+    fetch(`https://animal-swapping-api.herokuapp.com/requests`, reqObj)
       .then(response => response.json())
       .then(request =>  {
         this.props.requestTrade(request)

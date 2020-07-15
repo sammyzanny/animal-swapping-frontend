@@ -32,7 +32,7 @@ class Profile extends React.Component {
 
     componentDidMount(){
         if (!this.props.currentUser){
-            fetch(`https://animal-swapping.herokuapp.com/user/${this.props.match.params.username}`)
+            fetch(`https://animal-swapping-api.herokuapp.com/user/${this.props.match.params.username}`)
             .then(response => response.json())
             .then(data =>  {
             if (data.error) {
