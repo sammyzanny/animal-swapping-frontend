@@ -12,7 +12,7 @@ class UserSearch extends Component {
   componentDidMount(){
     const {itemname, username} = this.props.match.params
     if(itemname){
-      fetch(`http://localhost:3000/users/with/${itemname}`)
+      fetch(`https://animal-swapping.herokuapp.com/users/with/${itemname}`)
       .then(resp => resp.json())
       .then(users => {
         this.setState(prevState => {
@@ -24,7 +24,7 @@ class UserSearch extends Component {
         })
       })
     } else if (username){
-      fetch(`http://localhost:3000/users/named/${username}`)
+      fetch(`https://animal-swapping.herokuapp.com/users/named/${username}`)
       .then(resp => resp.json())
       .then(users => {
         this.setState(prevState => {

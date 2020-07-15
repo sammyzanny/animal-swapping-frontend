@@ -38,7 +38,7 @@ class SignUp extends Component {
     if (this.state.password !== this.state.confirmPassword){
       return alert("Passwords do not match")
     }
-    fetch('http://localhost:3000/users', reqObj)
+    fetch('https://animal-swapping.herokuapp.com/users', reqObj)
       .then(response => response.json())
       .then(data =>  {
           if (data.error) {
