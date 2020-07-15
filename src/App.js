@@ -34,7 +34,7 @@ class App extends React.Component {
     <Router >
       <React.Fragment>
       <NavBar currentUser={this.props.currentUser}/>
-     { this.props.currentUser ? <button onClick={this.signOut} variant="contained" color="primary" style={{float: "right"}}>Sign Out</Button> : null}
+     { this.props.currentUser ? <button onClick={this.signOut} variant="contained" color="primary" style={{float: "right"}}>Sign Out</button> : null}
       <Switch >
         <Route exact path="/items" render={(rp) => <Items {...rp} currentUser={this.props.currentUser} items={this.props.items} type="items"/>} />
         {this.props.currentUser ? 
